@@ -63,11 +63,11 @@ The source compiled with C++11 and the warning flags shown above without compile
 | Zero interest | $1,000 initial, $100 monthly, 0%, 1 year | $1,000 without deposits; $2,200 with deposits; $0 interest |
 | Zero monthly deposit | $1,000 initial, $0 monthly, 6%, 1 year | Both reports show $1,061.68 and $61.68 interest |
 
-These checks cover valid inputs, not every possible case.
+After adding input validation, 36 checks passed covering the original example, zero interest/deposits/starting balance, invalid numeric entries, negative values, fractional or out-of-range years, retries, surrounding whitespace, and end of input. These checks do not cover every possible case. Very large finite values or year counts are not capped and can produce overflow or excessive output.
 
 ## Current limitations
 
-The program does not yet validate nonnumeric input or reject negative amounts and invalid year values. Input validation is the next improvement. It uses `double` for calculations and displays amounts to two decimal places. It is an academic demonstration, not a production banking application.
+The program validates complete input lines, rejects nonnumeric or nonfinite values and negative amounts or rates, and requires a positive whole number of years. Invalid entries display a message and prompt again. If input ends, the program exits without calculating. It uses `double` for calculations and displays amounts to two decimal places. It is an academic demonstration, not a production banking application.
 
 ## Original course reflection
 
