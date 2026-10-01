@@ -17,8 +17,8 @@ You need Git and a C++ compiler, such as g++ or clang++.
 From a terminal:
 
 ```bash
-git clone https://github.com/jcoppola86/Portfolio.git
-cd Portfolio
+git clone https://github.com/jcoppola86/Airgead-Banking-Investment-Calculator.git
+cd Airgead-Banking-Investment-Calculator
 g++ -std=c++11 -Wall -Wextra -pedantic src/main.cpp src/InvestmentCalculator.cpp -o investment_calculator
 ./investment_calculator
 ```
