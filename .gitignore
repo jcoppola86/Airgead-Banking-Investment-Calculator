@@ -1,0 +1,9 @@
+# Compiled program and object files
+/investment_calculator
+/investment_calculator.exe
+*.o
+*.obj
+
+# Python test cache and macOS files
+__pycache__/
+.DS_Store
