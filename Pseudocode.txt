@@ -1,32 +1,44 @@
 BEGIN PROGRAM
 
-DISPLAY "Airgead Banking App"
-PROMPT user for Initial Investment Amount
-PROMPT user for Monthly Deposit
-PROMPT user for Annual Interest Rate
-PROMPT user for Number of Years
+DISPLAY data input heading
+READ each input as a complete line
+    Initial investment: number from 0 to 1,000,000,000
+    Monthly deposit: number from 0 to 1,000,000,000
+    Annual interest rate: number from 0 to 100
+    Years: whole number from 1 to 100
+    IF input is invalid
+        DISPLAY allowed range and PROMPT again
+    IF input ends
+        DISPLAY exit message and END PROGRAM
 
-DISPLAY user input values
-WAIT for key to continue
+WAIT for Enter before displaying reports
+IF input ends
+    DISPLAY exit message and END PROGRAM
 
-CALL calculateBalanceWithoutMonthlyDeposit(initialInvestment, interestRate, numberOfYears)
-    LOOP for each year from 1 to numberOfYears
-        COMPOUND balance monthly
-        TRACK interest earned for year
-        CALL printDetails(year, balance, interestEarned)
-    END LOOP
-RETURN final balance
+CREATE calculator using the four inputs
+SET monthly rate to annual rate / 100 / 12
 
-CALL balanceWithMonthlyDeposit(initialInvestment, monthlyDeposit, interestRate, numberOfYears)
-    LOOP for each year from 1 to numberOfYears
-        FOR each month in 12
-            CALCULATE interest on balance before deposit
-            ADD interest to balance
-            TRACK interest earned for year
-            ADD monthly deposit AFTER interest
-        END FOR
-        CALL printDetails(year, balance, interestEarned)
-    END LOOP
-RETURN final balance
+DISPLAY report heading without monthly deposits
+SET balance to initial investment
+FOR each year
+    SET yearly interest to zero
+    FOR each of 12 months
+        CALCULATE interest as balance * monthly rate
+        ADD interest to balance and yearly interest
+    END FOR
+    PRINT year, balance, and yearly interest
+END FOR
+
+DISPLAY report heading with monthly deposits
+RESET balance to initial investment
+FOR each year
+    SET yearly interest to zero
+    FOR each of 12 months
+        CALCULATE interest as balance * monthly rate
+        ADD interest to balance and yearly interest
+        ADD monthly deposit to balance AFTER interest
+    END FOR
+    PRINT year, balance, and yearly interest
+END FOR
 
 END PROGRAM
