@@ -7,7 +7,7 @@
 // Read one complete line so invalid entries do not affect the next prompt.
 template <typename T>
 bool readNumber(const std::string& prompt, const std::string& error,
-                T& value, bool positiveOnly) {
+                T& value, T minimum, T maximum) {
     std::string line;
     while (true) {
         std::cout << prompt;
@@ -20,7 +20,7 @@ bool readNumber(const std::string& prompt, const std::string& error,
         char extra;
         if ((input >> candidate) && !(input >> extra) &&
             std::isfinite(static_cast<double>(candidate)) &&
-            (positiveOnly ? candidate > 0 : candidate >= 0)) {
+            candidate >= minimum && candidate <= maximum) {
             value = candidate;
             return true;
         }
@@ -38,17 +38,17 @@ int main() {
     std::cout << "********** Data Input ************" << std::endl;
 
     if (!readNumber("Initial Investment Amount: ",
-                    "Enter a nonnegative number for the initial investment.",
-                    initialInvestment, false) ||
+                    "Enter an initial investment from 0 to 1,000,000,000 (without commas).",
+                    initialInvestment, 0.0, 1000000000.0) ||
         !readNumber("Monthly Deposit: ",
-                    "Enter a nonnegative number for the monthly deposit.",
-                    monthlyDeposit, false) ||
+                    "Enter a monthly deposit from 0 to 1,000,000,000 (without commas).",
+                    monthlyDeposit, 0.0, 1000000000.0) ||
         !readNumber("Annual Interest: ",
-                    "Enter a nonnegative annual interest rate (6 means 6%).",
-                    interestRate, false) ||
+                    "Enter an annual interest rate from 0 to 100 (6 means 6%).",
+                    interestRate, 0.0, 100.0) ||
         !readNumber("Number of years: ",
-                    "Enter a positive whole number of years.",
-                    numberOfYears, true)) {
+                    "Enter a whole number of years from 1 to 100.",
+                    numberOfYears, 1, 100)) {
         std::cout << "\nInput ended. No calculation was performed." << std::endl;
         return 0;
     }
