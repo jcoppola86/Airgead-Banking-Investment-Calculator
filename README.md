@@ -25,7 +25,15 @@ g++ -std=c++11 -Wall -Wextra -pedantic src/main.cpp src/InvestmentCalculator.cpp
 
 On macOS, you can substitute `clang++` for `g++`. On Windows with MinGW, the executable is typically `investment_calculator.exe`.
 
-Enter the four requested values, using `6` for a 6% annual interest rate. Press Enter at the continuation prompt to display the reports.
+Enter numbers without dollar signs, commas, or percent signs. Use `6` for a 6% annual interest rate. Press Enter at the continuation prompt to display the reports.
+
+Accepted ranges:
+
+- Initial investment and monthly deposit: $0 to $1,000,000,000 each.
+- Annual interest rate: 0% to 100%.
+- Years: 1 to 100, as a whole number.
+
+These limits keep the demo from producing overflowing balances or an excessively long report.
 
 ## Example
 
@@ -50,12 +58,13 @@ The program calculates interest on the existing balance before adding each month
 - `src/main.cpp`: user input and report headings.
 - `src/InvestmentCalculator.h`: calculator class declaration.
 - `src/InvestmentCalculator.cpp`: calculations and yearly report output.
-- `Pseudocode.txt`: planning notes.
-- `CS210_Project2.zip`: archived project copy. The instructions above use the source files in `src`.
+- `Pseudocode.txt`: steps followed by the current program.
+- `tests/test_calculator.py`: repeatable console tests.
+- `CS210_Project2.zip`: archived coursework copy, kept for reference. It does not include the later portfolio updates. Build the current version from `src`.
 
 ## Checks performed
 
-The source compiled with C++11 and the warning flags shown above without compiler warnings. These manual checks were run against the current code:
+The source compiled with C++11 and the warning flags shown above without compiler warnings. The saved tests check these examples:
 
 | Check | Inputs | Observed result |
 | --- | --- | --- |
@@ -63,13 +72,27 @@ The source compiled with C++11 and the warning flags shown above without compile
 | Zero interest | $1,000 initial, $100 monthly, 0%, 1 year | $1,000 without deposits; $2,200 with deposits; $0 interest |
 | Zero monthly deposit | $1,000 initial, $0 monthly, 6%, 1 year | Both reports show $1,061.68 and $61.68 interest |
 
-After adding input validation, 36 checks passed covering the original example, zero interest/deposits/starting balance, invalid numeric entries, negative values, fractional or out-of-range years, retries, surrounding whitespace, and end of input. These checks do not cover every possible case. Very large finite values or year counts are not capped and can produce overflow or excessive output.
+Run the tests from the repository folder with Python 3 and a C++ compiler installed:
+
+```bash
+python3 tests/test_calculator.py
+```
+
+For clang++:
+
+```bash
+CXX=clang++ python3 tests/test_calculator.py
+```
+
+The script builds the program in a temporary folder and checks its output. All 8 test methods passed, covering 47 input scenarios: example calculations, zero values, invalid entries, retries, input limits, whitespace, and end of input.
 
 ## Current limitations
 
-The program validates complete input lines, rejects nonnumeric or nonfinite values and negative amounts or rates, and requires a positive whole number of years. Invalid entries display a message and prompt again. If input ends, the program exits without calculating. It uses `double` for calculations and displays amounts to two decimal places. It is an academic demonstration, not a production banking application.
+The program validates complete input lines and checks the ranges listed above. Invalid entries display a message and prompt again. If input ends, the program exits without calculating. It uses `double` for calculations and displays amounts to two decimal places. It is an academic demonstration, not a production banking application.
 
 ## Original course reflection
+
+This reflection is from the course submission. Input validation and the saved tests were added afterward.
 
 CS-210 Portfolio Project Reflection
 
